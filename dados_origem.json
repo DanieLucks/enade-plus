@@ -1,0 +1,100 @@
+{
+  "mundos": [
+    { "sk_mundo": "comp_especifico", "nome_mundo": "Componente Específico", "ordem_mundo": 1 }
+  ],
+  "topicos": [
+    { "sk_topico": "topico_seguranca", "nk_mundo": "comp_especifico", "nome_topico": "Segurança da Informação", "ordem_topico": 1 },
+    { "sk_topico": "topico_modelagem", "nk_mundo": "comp_especifico", "nome_topico": "Engenharia e Modelagem de Software", "ordem_topico": 2 }
+  ],
+  "aulas": [
+    {
+      "sk_aula": "aula_pilares_seguranca",
+      "nk_topico": "topico_seguranca",
+      "titulo_aula": "Os Pilares da Segurança da Informação (C.I.D.A.)",
+      "conteudo_markdown": "Para gabaritar as questões do ENADE, você precisa dominar os pilares da Segurança da Informação:\n\n• **Confidencialidade:** Garante que a informação só esteja disponível para acessos autorizados.\n• **Integridade:** Salvaguarda os dados contra alterações ou modificações indevidas.\n• **Disponibilidade:** Garante que os dados e sistemas estejam acessíveis sempre que requisitados por usuários legítimos.\n• **Autenticidade:** Garante a identidade de quem emite ou gera a informação.\n\n⚠️ *Pegadinha do INEP:* O exame costuma misturar o conceito de Integridade com o de Acessibilidade (que pertence à Disponibilidade)!",
+      "tempo_leitura_segundos": 45
+    },
+    {
+      "sk_aula": "aula_modelagem_uml",
+      "nk_topico": "topico_modelagem",
+      "titulo_aula": "Modelagem Conceitual e Diagramas UML",
+      "conteudo_markdown": "A modelagem utilizando a UML (Unified Modeling Language) serve para estruturar e organizar sistemas:\n\n• **Associação:** É o mecanismo de ligação estrutural simples entre duas classes.\n• **Multiplicidade/Cardinalidade:** Indica o número de instâncias de uma classe que podem se relacionar com instâncias de outra classe (ex: 1..1, 0..n).\n• **Herança (Generalização):** Permite que subclasses herdem comportamentos e atributos comuns de uma superclasse.",
+      "tempo_leitura_segundos": 45
+    }
+  ],
+  "questoes": [
+    {
+      "sk_questao": "enade_2021_q25",
+      "nk_topico": "topico_seguranca",
+      "nk_aula": "aula_pilares_seguranca",
+      "tipo_questao": "objetiva",
+      "ano_prova": 2021,
+      "enunciado_texto": "Em conformidade com a ABNT NBR ISO/IEC 27002 (2013), segurança da informação envolve práticas e processos de proteção e salvaguarda dos ativos da informação... Está amparada pelos preceitos de integridade, disponibilidade e confidencialidade. Avalie as afirmações a seguir:",
+      "afirmacoes_json": [
+        { "letra": "I", "texto": "A integridade da informação tem como objetivo garantir a acessibilidade da informação." },
+        { "letra": "II", "texto": "A disponibilidade garante que os autorizados a acessarem a informação possam fazê-lo sempre que necessário." },
+        { "letra": "III", "texto": "A confidencialidade da informação é a garantia de que somente pessoas autorizadas terão acesso a ela." },
+        { "letra": "V", "texto": "A autenticidade é a garantia de que in um processo de comunicação os remetentes sejam exatamente quem dizem ser." }
+      ],
+      "alternativas_json": [
+        { "opcao": "A", "texto": "I e II." },
+        { "opcao": "B", "texto": "I e IV." },
+        { "opcao": "C", "texto": "II, III e V." },
+        { "opcao": "D", "texto": "I, III, IV e V." }
+      ],
+      "resposta_correta": "C",
+      "feedback_resolucao": "Alternativa Correta: C. A afirmação I está incorreta porque garantir a acessibilidade é um objetivo da *Disponibilidade*, enquanto a *Integridade* foca em proteger o dado contra alterações indevidas."
+    },
+    {
+      "sk_questao": "enade_2021_q12",
+      "nk_topico": "topico_seguranca",
+      "nk_aula": "aula_pilares_seguranca",
+      "tipo_questao": "objetiva",
+      "ano_prova": 2021,
+      "enunciado_texto": "A segurança dos dados refere-se às medidas que garantem confidencialidade, integridade e disponibilidade dos sistemas de informação e dos dados neles armazenados. Avalie as asserções a seguir:\n\nI. A confidencialidade dos dados é o que garante que eles estejam protegidos contra acesso não autorizado.\n\nPORQUE\n\nII. As permissões de acesso às informações contidas nos bancos de dados dependem também da disponibilidade de acesso aos dados.",
+      "afirmacoes_json": [],
+      "alternativas_json": [
+        { "opcao": "A", "texto": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I." },
+        { "opcao": "B", "texto": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I." }
+      ],
+      "resposta_correta": "B",
+      "feedback_resolucao": "Alternativa Correta: B. Ambas as asserções trazem conceitos verdadeiros, mas a asserção II descreve a *Disponibilidade*, o que não serve como justificativa direta para as regras de *Confidencialidade* explicadas na asserção I."
+    },
+    {
+      "sk_questao": "enade_2021_q09",
+      "nk_topico": "topico_modelagem",
+      "nk_aula": "aula_modelagem_uml",
+      "tipo_questao": "objetiva",
+      "ano_prova": 2021,
+      "enunciado_texto": "O gestor de uma instituição seguradora solicitou ao desenvolvedor o projeto de uma solução computacional. Após executar a análise de requisitos, o desenvolvedor esboçou o diagrama UML contendo as classes 'Segurado' e 'Seguro'. Avalie as afirmações:",
+      "afirmacoes_json": [
+        { "letra": "II", "texto": "O mecanismo de ligação entre as classes Segurado e Seguro é a associação." },
+        { "letra": "IV", "texto": "É permitido que um Segurado possa adquirir várias apólices de Seguro." }
+      ],
+      "alternativas_json": [
+        { "opcao": "A", "texto": "I e III." },
+        { "opcao": "B", "texto": "II e IV." }
+      ],
+      "resposta_correta": "B",
+      "feedback_resolucao": "Alternativa Correta: B. A afirmação II está certa pois a linha reta indica uma associação. A afirmação IV está correta porque a multiplicidade '0..n' permite que um segurado possua vários seguros vinculados."
+    },
+    {
+      "sk_questao": "enade_2021_q35",
+      "nk_topico": "topico_modelagem",
+      "nk_aula": "aula_modelagem_uml",
+      "tipo_questao": "objetiva",
+      "ano_prova": 2021,
+      "enunciado_texto": "A legibilidade diz respeito às características que possam dificultar ou facilitar a leitura das informações textuais... Acerca da importância da legibilidade em interfaces, avalie as afirmações:",
+      "afirmacoes_json": [
+        { "letra": "I", "texto": "Em uma interface legível, o texto longo deve ser lido rapidamente e deve aparecer em letras maiúsculas e minúsculas misturadas." },
+        { "letra": "III", "texto": "O texto que deve ser lido por idosos aparece em letras claras sobre um fundo escuro, pois o fundo brilhante pode ofuscar as letras." }
+      ],
+      "alternativas_json": [
+        { "opcao": "A", "texto": "I, apenas." },
+        { "opcao": "B", "texto": "I e III, apenas." }
+      ],
+      "resposta_correta": "B",
+      "feedback_resolucao": "Alternativa Correta: B. As afirmações I e III correspondem às boas práticas de ergonomia e usabilidade de interfaces expostas no caderno."
+    }
+  ]
+}
