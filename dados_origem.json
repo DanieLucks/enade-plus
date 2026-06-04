@@ -1,100 +1,78 @@
-{
-  "mundos": [
-    { "sk_mundo": "comp_especifico", "nome_mundo": "Componente Específico", "ordem_mundo": 1 }
-  ],
-  "topicos": [
-    { "sk_topico": "topico_seguranca", "nk_mundo": "comp_especifico", "nome_topico": "Segurança da Informação", "ordem_topico": 1 },
-    { "sk_topico": "topico_modelagem", "nk_mundo": "comp_especifico", "nome_topico": "Engenharia e Modelagem de Software", "ordem_topico": 2 }
-  ],
-  "aulas": [
-    {
-      "sk_aula": "aula_pilares_seguranca",
-      "nk_topico": "topico_seguranca",
-      "titulo_aula": "Os Pilares da Segurança da Informação (C.I.D.A.)",
-      "conteudo_markdown": "Para gabaritar as questões do ENADE, você precisa dominar os pilares da Segurança da Informação:\n\n• **Confidencialidade:** Garante que a informação só esteja disponível para acessos autorizados.\n• **Integridade:** Salvaguarda os dados contra alterações ou modificações indevidas.\n• **Disponibilidade:** Garante que os dados e sistemas estejam acessíveis sempre que requisitados por usuários legítimos.\n• **Autenticidade:** Garante a identidade de quem emite ou gera a informação.\n\n⚠️ *Pegadinha do INEP:* O exame costuma misturar o conceito de Integridade com o de Acessibilidade (que pertence à Disponibilidade)!",
-      "tempo_leitura_segundos": 45
-    },
-    {
-      "sk_aula": "aula_modelagem_uml",
-      "nk_topico": "topico_modelagem",
-      "titulo_aula": "Modelagem Conceitual e Diagramas UML",
-      "conteudo_markdown": "A modelagem utilizando a UML (Unified Modeling Language) serve para estruturar e organizar sistemas:\n\n• **Associação:** É o mecanismo de ligação estrutural simples entre duas classes.\n• **Multiplicidade/Cardinalidade:** Indica o número de instâncias de uma classe que podem se relacionar com instâncias de outra classe (ex: 1..1, 0..n).\n• **Herança (Generalização):** Permite que subclasses herdem comportamentos e atributos comuns de uma superclasse.",
-      "tempo_leitura_segundos": 45
-    }
-  ],
-  "questoes": [
-    {
-      "sk_questao": "enade_2021_q25",
-      "nk_topico": "topico_seguranca",
-      "nk_aula": "aula_pilares_seguranca",
-      "tipo_questao": "objetiva",
-      "ano_prova": 2021,
-      "enunciado_texto": "Em conformidade com a ABNT NBR ISO/IEC 27002 (2013), segurança da informação envolve práticas e processos de proteção e salvaguarda dos ativos da informação... Está amparada pelos preceitos de integridade, disponibilidade e confidencialidade. Avalie as afirmações a seguir:",
-      "afirmacoes_json": [
-        { "letra": "I", "texto": "A integridade da informação tem como objetivo garantir a acessibilidade da informação." },
-        { "letra": "II", "texto": "A disponibilidade garante que os autorizados a acessarem a informação possam fazê-lo sempre que necessário." },
-        { "letra": "III", "texto": "A confidencialidade da informação é a garantia de que somente pessoas autorizadas terão acesso a ela." },
-        { "letra": "V", "texto": "A autenticidade é a garantia de que in um processo de comunicação os remetentes sejam exatamente quem dizem ser." }
-      ],
-      "alternativas_json": [
-        { "opcao": "A", "texto": "I e II." },
-        { "opcao": "B", "texto": "I e IV." },
-        { "opcao": "C", "texto": "II, III e V." },
-        { "opcao": "D", "texto": "I, III, IV e V." }
-      ],
-      "resposta_correta": "C",
-      "feedback_resolucao": "Alternativa Correta: C. A afirmação I está incorreta porque garantir a acessibilidade é um objetivo da *Disponibilidade*, enquanto a *Integridade* foca em proteger o dado contra alterações indevidas."
-    },
-    {
-      "sk_questao": "enade_2021_q12",
-      "nk_topico": "topico_seguranca",
-      "nk_aula": "aula_pilares_seguranca",
-      "tipo_questao": "objetiva",
-      "ano_prova": 2021,
-      "enunciado_texto": "A segurança dos dados refere-se às medidas que garantem confidencialidade, integridade e disponibilidade dos sistemas de informação e dos dados neles armazenados. Avalie as asserções a seguir:\n\nI. A confidencialidade dos dados é o que garante que eles estejam protegidos contra acesso não autorizado.\n\nPORQUE\n\nII. As permissões de acesso às informações contidas nos bancos de dados dependem também da disponibilidade de acesso aos dados.",
-      "afirmacoes_json": [],
-      "alternativas_json": [
-        { "opcao": "A", "texto": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I." },
-        { "opcao": "B", "texto": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I." }
-      ],
-      "resposta_correta": "B",
-      "feedback_resolucao": "Alternativa Correta: B. Ambas as asserções trazem conceitos verdadeiros, mas a asserção II descreve a *Disponibilidade*, o que não serve como justificativa direta para as regras de *Confidencialidade* explicadas na asserção I."
-    },
-    {
-      "sk_questao": "enade_2021_q09",
-      "nk_topico": "topico_modelagem",
-      "nk_aula": "aula_modelagem_uml",
-      "tipo_questao": "objetiva",
-      "ano_prova": 2021,
-      "enunciado_texto": "O gestor de uma instituição seguradora solicitou ao desenvolvedor o projeto de uma solução computacional. Após executar a análise de requisitos, o desenvolvedor esboçou o diagrama UML contendo as classes 'Segurado' e 'Seguro'. Avalie as afirmações:",
-      "afirmacoes_json": [
-        { "letra": "II", "texto": "O mecanismo de ligação entre as classes Segurado e Seguro é a associação." },
-        { "letra": "IV", "texto": "É permitido que um Segurado possa adquirir várias apólices de Seguro." }
-      ],
-      "alternativas_json": [
-        { "opcao": "A", "texto": "I e III." },
-        { "opcao": "B", "texto": "II e IV." }
-      ],
-      "resposta_correta": "B",
-      "feedback_resolucao": "Alternativa Correta: B. A afirmação II está certa pois a linha reta indica uma associação. A afirmação IV está correta porque a multiplicidade '0..n' permite que um segurado possua vários seguros vinculados."
-    },
-    {
-      "sk_questao": "enade_2021_q35",
-      "nk_topico": "topico_modelagem",
-      "nk_aula": "aula_modelagem_uml",
-      "tipo_questao": "objetiva",
-      "ano_prova": 2021,
-      "enunciado_texto": "A legibilidade diz respeito às características que possam dificultar ou facilitar a leitura das informações textuais... Acerca da importância da legibilidade em interfaces, avalie as afirmações:",
-      "afirmacoes_json": [
-        { "letra": "I", "texto": "Em uma interface legível, o texto longo deve ser lido rapidamente e deve aparecer em letras maiúsculas e minúsculas misturadas." },
-        { "letra": "III", "texto": "O texto que deve ser lido por idosos aparece em letras claras sobre um fundo escuro, pois o fundo brilhante pode ofuscar as letras." }
-      ],
-      "alternativas_json": [
-        { "opcao": "A", "texto": "I, apenas." },
-        { "opcao": "B", "texto": "I e III, apenas." }
-      ],
-      "resposta_correta": "B",
-      "feedback_resolucao": "Alternativa Correta: B. As afirmações I e III correspondem às boas práticas de ergonomia e usabilidade de interfaces expostas no caderno."
-    }
-  ]
-}
+[
+  {
+    "sk_questao": "enade_2021_q01",
+    "nk_topico": "topico_formacao_geral",
+    "nk_aula": "aula_mobilidade_social",
+    "tipo_questao": "objetiva",
+    "ano_prova": 2021,
+    "enunciado_texto": "A chance de uma criança de baixa renda ter um futuro melhor que a realidade em que nasceu está, em maior ou menor grau, relacionada à escolaridade e ao nível de renda de seus pais. Nos países ricos, o 'elevador social' anda mais rápido. Nos emergentes, mais devagar. No Brasil, ainda mais lentamente. O país ocupa a segunda pior posição em um estudo sobre mobilidade social feito pela Organização para a Cooperação e Desenvolvimento Econômico (OCDE), em 2018, com dados de 30 países. Segundo os resultados, seriam necessárias nove gerações para que os descendentes de um brasileiro entre os 10% mais pobres atingissem o nível médio de rendimento do país. A estimativa é a mesma para a África do Sul e só perde para a Colômbia, onde o período de ascensão levaria 11 gerações. Mais de 1/3 daqueles que nascem entre os 20% mais pobres no Brasil permanece na base da pirâmide, enquanto apenas 7% consegue chegar aos 20% mais ricos. Filhos de pais na base da pirâmide têm dificuldade de acesso à saúde e maior probabilidade de frequentar uma escola com ensino de baixa qualidade. A educação precária, em geral, limita as opções para esses jovens no mercado de trabalho. Sobram-lhes empregos de baixa remuneração, em que a possibilidade de crescimento salarial para quem tem pouca qualificação é pequena e a chance de perpetuação do ciclo de pobreza, grande. A partir das informações apresentadas, é correto afirmar que:",
+    "conteudos_abas_json": [],
+    "afirmacoes_json": [],
+    "alternativas_json": [
+      { "opcao": "A", "texto": "O fator ambiental e o fator demográfico afetam a mobilidade social observada, sendo ela menor nos países que apresentam as maiores taxas de natalidade." },
+      { "opcao": "B", "texto": "A baixa organização social dos economicamente menos favorecidos determina a baixa mobilidade social da base para o topo da pirâmide." },
+      { "opcao": "C", "texto": "A mobilidade social é caracterizada por um fator ancestral que se revela ao longo das gerações, sendo um limitador da eficácia de políticas públicas de redução das desigualdades sociais." },
+      { "opcao": "D", "texto": "A análise de mobilidade social permite a observação de um ciclo vicioso, que se caracteriza por uma subida nas camadas sociais seguida de uma queda, repetindo-se esse ciclo de modo sucessivo." },
+      { "opcao": "E", "texto": "A ascensão social depende de fatores viabilizadores que estão fora do alcance das camadas pobres, o que ocasiona conflitos sociais em busca do acesso a tais fatores." }
+    ],
+    "resposta_correta": "E",
+    "feedback_resolucao": "Alternativa Correta: E. O texto deixa claro que a falta de acesso a serviços básicos de qualidade (como saúde e educação de alto nível) atua como uma barreira que limita as opções dos jovens no mercado de trabalho, mantendo-os presos a empregos de baixa remuneração. Esses fatores viabilizadores de ascensão estão historicamente fora do alcance das camadas mais pobres, perpetuando o ciclo de pobreza."
+  },
+  {
+    "sk_questao": "enade_2021_q02",
+    "nk_topico": "topico_formacao_geral",
+    "nk_aula": "aula_desperdicio_alimentos",
+    "tipo_questao": "objetiva",
+    "ano_prova": 2021,
+    "enunciado_texto": "Considere as informações apresentadas nos textos a respeito do desperdício de alimentos e da aparência das hortaliças. Avalie as asserções a seguir e a relação proposta entre elas:",
+    "conteudos_abas_json": [],
+    "afirmacoes_json": [
+      { "letra": "I", "texto": "O texto I sintetiza uma informação principal do texto II, ao apresentar critérios distintivos de alterações visuais que têm efeitos puramente estéticos em produtos alimentícios daquelas que têm implicações na qualidade desses produtos." },
+      { "letra": "PORQUE", "texto": "" },
+      { "letra": "II", "texto": "O texto II divulga que o aumento das perdas na cadeia produtiva de hortaliças no Brasil é proporcional à elevação de exigências dos consumidores pela aparência de produtos agropecuários." }
+    ],
+    "alternativas_json": [
+      { "opcao": "A", "texto": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I." },
+      { "opcao": "B", "texto": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I." },
+      { "opcao": "C", "texto": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa." },
+      { "opcao": "D", "texto": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira." },
+      { "opcao": "E", "texto": "As asserções I e II são proposições falsas." }
+    ],
+    "resposta_correta": "C",
+    "feedback_resolucao": "Alternativa Correta: C. A asserção I é verdadeira porque o Texto I define perfeitamente o que é apenas 'feio' (estético) e o que está 'estragado' (qualidade). A asserção II é falsa porque o Texto II deixa claro que o mercado brasileiro atual é pouco exigente no varejo, gerando desperdício nas residências e gôndolas por falta de manuseio correto e higiene."
+  },
+  {
+    "sk_questao": "enade_2021_q03",
+    "nk_topico": "topico_formacao_geral",
+    "nk_aula": "aula_mobilidade_urbana",
+    "tipo_questao": "objetiva",
+    "ano_prova": 2021,
+    "enunciado_texto": "Considerando as informações apresentadas e o uso de bicicletas como alternativa para melhorar a qualidade de vida nas cidades, avalie as afirmações a seguir:",
+    "conteudos_abas_json": [
+      {
+        "titulo": "Texto I",
+        "tipo": "texto",
+        "conteudo": "Na Alemanha nazista, no auge da Segunda Guerra Mundial, surgiu a necessidade de abrir mais espaço para os veículos automotivos. Com muitos ciclistas, as bicicletas viraram um empecilho, forçando a criação de um espaço exclusivo para elas - talvez as primeiras ciclovias do mundo. Mas, se na década de 1940 os veículos eram prioridade, hoje, o uso de bicicletas e das ciclovias - surge como uma das principais alternativas para melhorar a qualidade de vida nas grandes metrópoles. Quando políticas públicas incentivam o uso de bicicletas como meio de transporte para curtas e médias distâncias, um novo panorama se abre."
+      },
+      {
+        "titulo": "Texto II (Charge)",
+        "tipo": "imagem",
+        "conteudo": "/assets/charge_ciclovia.png"
+      }
+    ],
+    "afirmacoes_json": [
+      { "letra": "I", "texto": "Dado que as bicicletas são veículos que ocupam pouco espaço na malha viária, prescinde-se de investimentos públicos em construção de ciclovias, sendo prioritárias campanhas de conscientização de motoristas a respeito dos benefícios do uso da bicicleta como meio de transporte." },
+      { "letra": "II", "texto": "O uso das bicicletas como meio de transporte contribui para a melhoria da qualidade de vida nas grandes metrópoles, pois elas não emitem poluentes, além de esse uso proporcionar a prática de atividade física." },
+      { "letra": "III", "texto": "A partir da Segunda Guerra Mundial, during o governo da Alemanha nazista, o uso da bicicleta como meio de transporte tornou-se eficaz e passou a prevalecer nas cidades europeias." }
+    ],
+    "alternativas_json": [
+      { "opcao": "A", "texto": "I, apenas." },
+      { "opcao": "B", "texto": "II, apenas." },
+      { "opcao": "C", "texto": "I e III, apenas." },
+      { "opcao": "D", "texto": "II e III, apenas." },
+      { "opcao": "E", "texto": "I, II e III." }
+    ],
+    "resposta_correta": "B",
+    "feedback_resolucao": "Alternativa Correta: B. A afirmação I está incorreta porque o uso em larga escala de bicicletas exige infraestrutura cicloviária planejada pelo poder público. A afirmação III é falsa porque na Alemanha Nazista a bicicleta virou um empecilho segregado para abrir espaço para os automóveis, não significando que ela se tornou o meio de transporte mais eficaz ou prevalente da Europa na época."
+  }
+]

@@ -98,21 +98,32 @@ async function buscarQuestoes() {
 
   // 4. Lógica de Resposta e Atualização do Estado de Vidas
   const handleRespostaQuestao = (acertou) => {
-    if (acertou) {
-      setXp(prev => prev + 10);
-      avancarFluxo();
-    } else {
-      const novasVidas = vidas - 1;
-      setVidas(novasVidas);
-      if (novasVidas === 0) {
-        if (questaoAtual?.nk_aula) {
-          carregarAulaRecuperacao(questaoAtual.nk_aula);
-        } else {
-          setVidas(5);
-          avancarFluxo();
-        }
+    if (!acertou) {
+    // Se o aluno errou, decrementa uma vida
+    setVidas((vidasAtuais) => {
+      const novasVidas = vidasAtuais - 1;
+      if (novasVidas <= 0) {
+        setTelaAtual('feedback-final'); // Game Over se acabarem as vidas
       }
+      return novasVidas;
+    });
+  } else {
+    // Se acertou, você pode somar pontuação/XP aqui se desejar
+    console.log("Acertou! Adicionando pontos...");
+  }
+
+  // 🚀 AQUI ESTÁ A CORREÇÃO: Avança para a próxima questão independente de ter acertado ou errado
+  setIndiceQuestao((indiceAtual) => {
+    const proximoIndice = indiceAtual + 1;
+
+    // Verifica se ainda existem questões no vetor
+    if (proximoIndice < questoes.length) {
+      return proximoIndice; // Muda o estado e o React renderiza a próxima
+    } else {
+      setTelaAtual('feedback-final'); // Fim do bloco de questões (Vitória)
+      return indiceAtual;
     }
+  });
   };
 
   // 5. Avança o Ponteiro do Vetor de Questões

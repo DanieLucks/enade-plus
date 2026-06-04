@@ -1,157 +1,173 @@
 import React, { useState } from 'react';
 
 export default function QuestaoJogo({ questao, vidas, onResponder }) {
-  const [opcaoSelecionada, setOpcaoSelecionada] = useState(null);
+  const [abaAtiva, setAbaAtiva] = useState(0);
+  const [opcaoSelecionada, setOpcaoSelecionada] = useState('');
   const [respondido, setRespondido] = useState(false);
-  const [statusResposta, setStatusResposta] = useState(null);
+  const [resultado, setResultado] = useState(null); // { acertou: boolean, feedback: string }
 
-  const handleVerificar = () => {
-    if (!opcaoSelecionada) return;
+  const abas = questao.conteudos_abas_json || [];
 
-    if (opcaoSelecionada === questao.resposta_correta) {
-      setStatusResposta('correto');
-    } else {
-      setStatusResposta('errado');
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!opcaoSelecionada || respondido) return;
+
+    const acertou = opcaoSelecionada === questao.resposta_correta;
     setRespondido(true);
+    setResultado({
+      acertou,
+      feedback: questao.feedback_resolucao
+    });
   };
 
-  const handleContinuar = () => {
-    const acertou = statusResposta === 'correto';
-    onResponder(acertou);
-    setOpcaoSelecionada(null);
-    setRespondido(false);
-    setStatusResposta(null);
+  const handleAvancar = () => {
+    onResponder(resultado.acertou);
   };
 
   return (
     <div style={styles.container}>
-      <div style={styles.topBar}>
-        <button style={styles.botaoFechar}>✕</button>
-        <div style={styles.barraProgressoContainer}>
-          <div style={{...styles.barraProgresso, width: '50%'}}></div>
-        </div>
-        <div style={styles.containerVidas}>
-          <span style={styles.iconeCoracao}>❤️</span>
-          <span style={styles.textoVidas}>{vidas}</span>
-        </div>
+      <div style={styles.topoBarra}>
+        <span style={styles.vidas}>❤️ Vidas: {vidas}</span>
+        <span style={styles.ano}>ENADE {questao.ano_prova}</span>
       </div>
 
-      <div style={styles.areaConteudo}>
-        <span style={styles.tagAno}>ENADE {questao.ano_prova}</span>
-        {/* Mapeado para o novo nome: enunciado_texto */}
-        <p style={styles.enunciado}>{questao.enunciado_texto}</p>
-        
-        {/* Mapeado para o novo nome: afirmacoes_json */}
+      <div style={styles.card}>
+        {/* ================= BOX DE ABAS DINÂMICAS ================= */}
+        {abas.length > 0 && (
+          <div style={styles.containerAbas}>
+            <div style={styles.AbasHeader}>
+              {abas.map((aba, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => setAbaAtiva(index)}
+                  style={{
+                    ...styles.botaoAba,
+                    ...(abaAtiva === index ? styles.abaAtiva : {})
+                  }}
+                >
+                  {aba.titulo}
+                </button>
+              ))}
+            </div>
+            
+            <div style={styles.AbasConteudo}>
+              {abas[abaAtiva].tipo === 'imagem' ? (
+                <img 
+                  src={abas[abaAtiva].conteudo} 
+                  alt={abas[abaAtiva].titulo} 
+                  style={styles.imagemAba} 
+                />
+              ) : (
+                <p style={styles.textoAba}>{abas[abaAtiva].conteudo}</p>
+              )}
+            </div>
+          </div>
+        )}
+        {/* ========================================================= */}
+
+        <h3 style={styles.enunciado}>{questao.enunciado_texto}</h3>
+
+        {/* Renderiza afirmações intermediárias (I, II, III) se existirem */}
         {questao.afirmacoes_json && questao.afirmacoes_json.length > 0 && (
-          <div style={styles.containerAfirmacoes}>
-            {questao.afirmacoes_json.map((afirmacao) => (
-              <p key={afirmacao.letra} style={styles.textoAfirmacao}>
-                <strong>{afirmacao.letra}.</strong> {afirmacao.texto}
+          <div style={styles.boxAfirmacoes}>
+            {questao.afirmacoes_json.map((af, i) => (
+              <p key={i} style={styles.textoAfirmacao}>
+                <strong>{af.letra}:</strong> {af.texto}
               </p>
             ))}
           </div>
         )}
 
-        {/* Mapeado para o novo nome: alternativas_json */}
-        <div style={styles.containerAlternativas}>
+        {/* Formulário de Alternativas (Sempre fixo embaixo do conteúdo) */}
+        <form onSubmit={handleSubmit} style={styles.form}>
           {questao.alternativas_json.map((alt) => {
-            const isSelected = opcaoSelecionada === alt.opcao;
-            const isCorrectAnswer = alt.opcao === questao.resposta_correta;
+            const IsSelected = opcaoSelecionada === alt.opcao;
             return (
-              <button
-                key={alt.opcao}
-                disabled={respondido}
-                onClick={() => setOpcaoSelecionada(alt.opcao)}
+              <label 
+                key={alt.opcao} 
                 style={{
-                  ...styles.cardAlternativa,
-                  ...(isSelected ? styles.cardSelecionado : {}),
-                  ...(respondido && isCorrectAnswer ? styles.cardCertoFixo : {})
+                  ...styles.opcaoLabel,
+                  ...(IsSelected ? styles.opcaoSelecionada : {})
                 }}
               >
+                <input
+                  type="radio"
+                  name="alternativa"
+                  value={alt.opcao}
+                  disabled={respondido}
+                  checked={opcaoSelecionada === alt.opcao}
+                  onChange={(e) => setOpcaoSelecionada(e.target.value)}
+                  style={styles.radioOculto}
+                />
                 <span style={{
-                  ...styles.badgeOpcao, 
-                  ...(isSelected ? styles.badgeSelecionada : {})
+                  ...styles.letraCirculo,
+                  ...(IsSelected ? styles.letraCirculoSelecionada : {})
                 }}>
                   {alt.opcao}
                 </span>
                 <span style={styles.textoAlternativa}>{alt.texto}</span>
-              </button>
+              </label>
             );
           })}
-        </div>
-      </div>
 
-      <div style={{
-        ...styles.painelInferior,
-        ...(statusResposta === 'correto' ? styles.painelSucesso : {}),
-        ...(statusResposta === 'errado' ? styles.painelErro : {})
-      }}>
-        {!respondido ? (
-          <button 
-            onClick={handleVerificar} 
-            disabled={!opcaoSelecionada}
-            style={{
-              ...styles.botaoAcao, 
-              ...(!opcaoSelecionada ? styles.botaoDesativado : styles.botaoVerificar)
-            }}
-          >
-            VERIFICAR
-          </button>
-        ) : (
-          <div style={styles.containerResultado}>
-            <div style={styles.textoResultado}>
-              {statusResposta === 'correto' ? (
-                <h3 style={styles.tituloSucesso}>🎉 Muito bem!</h3>
-              ) : (
-                <>
-                  <h3 style={styles.tituloErro}>😢 Resposta incorreta</h3>
-                  <p style={styles.feedbackTexto}>{questao.feedback_resolucao}</p>
-                </>
-              )}
-            </div>
-            <button onClick={handleContinuar} style={styles.botaoContinuar}>
-              CONTINUAR
+          {!respondido ? (
+            <button 
+              type="submit" 
+              disabled={!opcaoSelecionada} 
+              style={{
+                ...styles.botaoVerificar,
+                ...(!opcaoSelecionada ? styles.botaoDesativado : {})
+              }}
+            >
+              VERIFICAR RESPOSTA
             </button>
-          </div>
-        )}
+          ) : (
+            <div style={{
+              ...styles.boxFeedback,
+              ...(resultado.acertou ? styles.feedbackAcerto : styles.feedbackErro)
+            }}>
+              <h4>{resultado.acertou ? '🎉 Excelente Trabalho!' : '😢 Não foi dessa vez'}</h4>
+              <p>{resultado.feedback}</p>
+              <button type="button" onClick={handleAvancar} style={styles.botaoContinuar}>
+                CONTINUAR
+              </button>
+            </div>
+          )}
+        </form>
       </div>
     </div>
   );
 }
 
-// Os estilos (styles) permanecem exatamente idênticos aos anteriores...
 const styles = {
-  container: { display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: '#FFF', fontFamily: 'sans-serif' },
-  topBar: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px 20px', borderBottom: '2px solid #E5E5E5' },
-  botaoFechar: { background: 'none', border: 'none', fontSize: '20px', color: '#AFAFAF', cursor: 'pointer' },
-  barraProgressoContainer: { flex: 1, height: '16px', backgroundColor: '#E5E5E5', borderRadius: '8px', margin: '0 15px', overflow: 'hidden' },
-  barraProgresso: { height: '100%', backgroundColor: '#58CC02', borderRadius: '8px', transition: 'width 0.3s' },
-  containerVidas: { display: 'flex', alignItems: 'center', gap: '5px' },
-  iconeCoracao: { fontSize: '22px' },
-  textoVidas: { fontSize: '18px', fontWeight: 'bold', color: '#FF4B4B' },
-  areaConteudo: { flex: 1, padding: '20px', overflowY: 'auto', paddingBottom: '160px' },
-  tagAno: { backgroundColor: '#E5F2FF', color: '#1890FF', padding: '4px 8px', borderRadius: '4px', fontSize: '12px', fontWeight: 'bold' },
-  enunciado: { fontSize: '16px', color: '#3C3C3C', lineHeight: '1.5', margin: '15px 0' },
-  containerAfirmacoes: { display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '20px', paddingLeft: '10px', borderLeft: '3px solid #E5E5E5' },
-  textoAfirmacao: { fontSize: '14px', color: '#4B4B4B', margin: 0 },
-  containerAlternativas: { display: 'flex', flexDirection: 'column', gap: '12px' },
-  cardAlternativa: { display: 'flex', alignItems: 'center', padding: '14px', borderRadius: '12px', border: '2px solid #E5E5E5', backgroundColor: '#FFF', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s', width: '100%' },
-  cardSelecionado: { border: '2px solid #84D8FF', backgroundColor: '#DDF4FF' },
-  cardCertoFixo: { border: '2px solid #58CC02', backgroundColor: '#E5F9D3' },
-  badgeOpcao: { width: '28px', height: '28px', border: '2px solid #E5E5E5', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#AFAFAF', marginRight: '12px', flexShrink: 0 },
-  badgeSelecionada: { border: '2px solid #84D8FF', color: '#1890FF', backgroundColor: '#FFF' },
-  textoAlternativa: { fontSize: '15px', color: '#4B4B4B' },
-  painelInferior: { position: 'fixed', bottom: 0, left: 0, right: 0, padding: '20px', borderTop: '2px solid #E5E5E5', backgroundColor: '#FFF', display: 'flex', justifyContent: 'center', zIndex: 10 },
-  painelSucesso: { backgroundColor: '#E5F9D3', borderTop: '2px solid #A8E474' },
-  painelErro: { backgroundColor: '#FFD8D8', borderTop: '2px solid #FF8F8F' },
-  botaoAcao: { width: '100%', maxWidth: '400px', padding: '14px', borderRadius: '12px', border: 'none', fontWeight: 'bold', fontSize: '16px', cursor: 'pointer', boxShadow: '0 4px 0 rgba(0,0,0,0.1)' },
-  botaoDesativado: { backgroundColor: '#E5E5E5', color: '#AFAFAF', cursor: 'not-allowed', boxShadow: 'none' },
-  botaoVerificar: { backgroundColor: '#58CC02', color: '#FFF' },
-  containerResultado: { width: '100%', maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '15px' },
-  textoResultado: { textAlign: 'left' },
-  tituloSucesso: { color: '#58A700', margin: '0 0 5px 0' },
-  tituloErro: { color: '#EA2B2B', margin: '0 0 5px 0' },
-  feedbackTexto: { fontSize: '14px', color: '#EA2B2B', margin: 0, lineHeight: '1.4' },
-  botaoContinuar: { padding: '14px', borderRadius: '12px', border: 'none', fontWeight: 'bold', fontSize: '16px', cursor: 'pointer', backgroundColor: '#58CC02', color: '#FFF' }
+  container: { display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh', backgroundColor: '#F7F7F7', padding: '20px', fontFamily: 'sans-serif' },
+  topoBarra: { display: 'flex', justifyContent: 'space-between', width: '100%', maxWidth: '650px', marginBottom: '10px', fontWeight: 'bold', color: '#555' },
+  card: { backgroundColor: '#FFF', padding: '25px', borderRadius: '16px', border: '2px solid #E5E5E5', width: '100%', maxWidth: '650px', boxShadow: '0 4px 0 #E5E5E5' },
+  
+  // Estilização das Abas (Estilo Duolingo/Navegador moderno)
+  containerAbas: { border: '2px solid #E5E5E5', borderRadius: '14px', overflow: 'hidden', marginBottom: '20px', backgroundColor: '#FFF' },
+  AbasHeader: { display: 'flex', backgroundColor: '#F0F0F0', borderBottom: '2px solid #E5E5E5' },
+  botaoAba: { flex: 1, padding: '12px', border: 'none', background: 'none', fontWeight: 'bold', color: '#777', cursor: 'pointer', transition: '0.2s', borderRight: '1px solid #E5E5E5' },
+  abaAtiva: { backgroundColor: '#FFF', color: '#58CC02', borderBottom: '3px solid #58CC02', marginBottom: '-2px' },
+  AbasConteudo: { padding: '15px', backgroundColor: '#FFF', display: 'flex', justifyContent: 'center' },
+  textoAba: { margin: 0, fontSize: '15px', color: '#3C3C3C', lineHeight: '1.5', textAlign: 'justify' },
+  imagemAba: { maxWidth: '100%', height: 'auto', borderRadius: '8px', maxHeight: '250px', objectFit: 'contain' },
+
+  enunciado: { fontSize: '16px', color: '#3C3C3C', lineHeight: '1.6', margin: '0 0 20px 0', textAlign: 'justify' },
+  boxAfirmacoes: { backgroundColor: '#F9F9F9', padding: '15px', borderRadius: '12px', border: '1px solid #E5E5E5', marginBottom: '25px' },
+  textoAfirmacao: { fontSize: '14px', margin: '0 0 8px 0', color: '#4B4B4B' },
+  form: { display: 'flex', flexDirection: 'column', gap: '12px' },
+  opcaoLabel: { display: 'flex', alignItems: 'center', padding: '14px', border: '2px solid #E5E5E5', borderRadius: '14px', cursor: 'pointer', transition: '0.15s', boxShadow: '0 3px 0 #E5E5E5' },
+  opcaoSelecionada: { borderColor: '#84D8FF', backgroundColor: '#DDF4FF', boxShadow: '0 3px 0 #84D8FF' },
+  radioOculto: { display: 'none' },
+  letraCirculo: { width: '28px', height: '28px', border: '2px solid #E5E5E5', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#777', marginRight: '12px', backgroundColor: '#FFF' },
+  letraCirculoSelecionada: { borderColor: '#1890FF', color: '#1890FF', backgroundColor: '#FFF' },
+  textoAlternativa: { fontSize: '15px', color: '#3C3C3C', flex: 1 },
+  botaoVerificar: { padding: '16px', backgroundColor: '#58CC02', color: '#FFF', border: 'none', borderRadius: '12px', fontWeight: 'bold', fontSize: '16px', cursor: 'pointer', boxShadow: '0 4px 0 #388E3C', marginTop: '15px' },
+  botaoDesativado: { backgroundColor: '#E5E5E5', color: '#AFAFAF', boxShadow: 'none', cursor: 'not-allowed' },
+  boxFeedback: { padding: '15px', borderRadius: '12px', marginTop: '15px', border: '2px solid' },
+  feedbackAcerto: { backgroundColor: '#D7F5D9', borderColor: '#58CC02', color: '#257429' },
+  feedbackErro: { backgroundColor: '#FFE6E6', borderColor: '#FF4D4D', color: '#A81C1C' },
+  botaoContinuar: { padding: '12px 24px', backgroundColor: '#FFF', border: '2px solid', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', marginTop: '10px' }
 };
